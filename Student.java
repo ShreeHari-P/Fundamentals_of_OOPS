@@ -1,36 +1,55 @@
 import java.util.Scanner;
 
-public class Student {
-    String name;
-    int marks;
+public class Student implements Cloneable{
+    private String studentId;
+    private String name;
+    private double marks;
 
-    public Student(String name, int marks){
+    public Student(String studentId, String name, double marks){
+        this.studentId = studentId;
         this.name = name;
         this.marks = marks;
     }
 
-    public String getName(){
-        return name;
+    public String getStudentId(){return studentId;}
+    public String getName(){return name;}
+    public double getMarks(){return marks;}
+
+    public void setMarks(double marks){
+        this.marks = marks;
     }
 
-    public int getMarks(){
-        return marks;
+    @Override
+    public Student clone(){
+        try {
+            return (Student) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public boolean isPassed(){
-        return (marks > 40);
+    @Override
+    public String toString(){
+        return "Student[id=" + studentId + ", name=" + name +", marks=" + marks +"]";
     }
 
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Enter Name and Marks: ");
+        
+        String studentId = scan.nextLine();
         String name = scan.nextLine();
-        int age = scan.nextInt();
+        double marks = scan.nextDouble();
 
-        Student s = new Student(name, age);
-        System.out.println("The name of the student: " + s.getName());
-        System.out.println("The Mark scored: " + s.getMarks());
-        System.out.println("Is Passed the test: " + s.isPassed());
-        scan.close();
+        Student originalStudent = new Student(studentId, name, marks);
+        Student copyStudent = originalStudent.clone();
+
+        copyStudent.setMarks(marks+5);
+
+        //Automatically calls toString()
+        System.out.println("Original: " + originalStudent);
+        System.out.println("Clone: " + copyStudent);
+        System.out.println("Independent: " + (originalStudent != copyStudent));
     }
 }
+
+
