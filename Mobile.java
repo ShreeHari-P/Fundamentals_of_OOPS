@@ -46,7 +46,7 @@ public class Mobile implements Cloneable {
         copy.setStorage(copy.getStorage() * 2);
         System.out.println("Original: " + original);
         System.out.println("Clone: " + copy);
-        System.out.println("Storage Equal: " + (original.getStorage == copy.getStorage));
+        System.out.println("Storage Equal: " + (original.getStorage() == copy.getStorage()));
         System.out.println("Independent: " + (original != copy));
     }    
 }
