@@ -1,56 +1,60 @@
-interface SmartDevice{
-    void turnOn();
+import java.util.*;
 
-    default void activate(){
-        System.out.println("Activating device...");
-        turnOn();
-    }
-
-    static String deviceInfo(){
-        return "Smart Home Device";
+class Door{
+    public String open(){
+        return "Opening Door...";
     }
 }
 
-class SmartLight implements SmartDevice{
-    @Override
-    public void turnOn(){
-        System.out.println("SmartLight is turned ON");
+class Fan{
+    public String start(){
+        return "Turning on Lights...";
     }
 }
 
-class SmartFan implements SmartDevice{
-    @Override
-    public void turnOn(){
-        System.out.println("SmartFan is turned ON");
-    }
-
-    @Override
-    public void activate(){
-        System.out.println("Fan Special Activation...");
-        turnOn();
+class Light{
+    public String on(){
+        return "Starting Fan...";
     }
 }
 
-class SmartAC implements SmartDevice{
-    @Override
-    public void turnOn(){
-        System.out.println("SmartAC is turned ON");
+class Ac{
+    public String cool(){
+        return "Cooling Room...";
     }
+}
+
+class Home{
+    private Door door;
+    private Fan fan;
+    private Light light;
+    private Ac ac;
+
+    public Home(Door door, Fan fan, Light light, Ac ac){
+        this.door = door;
+        this.fan = fan;
+        this.light = light;
+        this.ac = ac;
+    }
+
+    public String activateHome(){
+        return door.open() + "\n" +
+                fan.start() + "\n" +
+                light.on() + "\n" +
+                ac.cool() + "\n" +
+                "Welcome Home!";
+    }     
 }
 
 public class SmartHome {
     public static void main(String[] args) {
-        
-        System.out.println(SmartDevice.deviceInfo());
-        SmartDevice[] smart = {
-            new SmartLight(),
-            new SmartFan(),
-            new SmartAC()
-        };
 
-        for(SmartDevice mySmart : smart){
-            mySmart.activate();
-            System.out.println();
-        }
-    }  
+        Door door = new Door();
+        Fan fan = new Fan();
+        Light light = new Light();
+        Ac ac = new Ac();
+
+        Home home = new Home(door, fan, light, ac);
+        System.out.println(home.activateHome());
+    }
 }
